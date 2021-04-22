@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise</title>
+</head>
+<body>
+    <script>
+        // resolve reject all ract
+
+        let promise = new Promise ((resolve,reject)=>{
+            resolve(11111)
+        })
+        // resolve => .then reject => .catch
+        promise.then(response =>{
+            console.log(`成功`)
+            console.log(resolve)
+        }).catch(error =>{
+            console.log(`失败`)
+        })
+
+        // 链式
+        function promise(status){
+            return new Promise((resolve,reject)=>{
+                if(status){
+                    console.log(`第一个promise成功`)
+                    resolve(`第一个promise返回数据成功`)
+                }else if(!status){
+                    console.log(`第一个promise失败`)
+                    reject(`第一个promise返回数据失败`)
+                }
+            })
+        }
+        promise(true).then(response =>{
+            console.log(response)
+        }).catch(error =>{
+            console.log(error);
+        })
+        // all 方法 数组内promise 全部成功才会执行.then回调，只要有一个不成功就会执行 error
+        Promise.all([promise1(true),promise(true)]).then(response =>{
+            console.log(`全部调用成功`);
+        }).catch(error =>{
+            console.log(`有些可能调用失败了`)
+        })
+
+        // race数组 当在执行的时候，遇到的返回结果是 resolve（成功），那么链式会继续执行
+        // 只要有一个 race 只要有一个是返回 resolve 就代表成功 就会回调.then 但是，如果第一个是返回 reject 那么就失败了
+        
+        Promise.race([promise1(true),promise(true)]).then(response =>{
+            console.log(`全部调用成功`);
+        }).catch(error =>{
+            console.log(`有些可能调用失败了`)
+        })
+    </script>
+</body>
+</html>
